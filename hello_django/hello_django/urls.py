@@ -18,6 +18,18 @@ from django.urls import path
 from django.http import HttpResponse
 from math import pi
 
+def rectangle_area_query(request):
+    try:
+        height = request.GET.get('height')
+        width = request.GET.get('width')
+        area = int(height) * int(width)
+        response = HttpResponse(f"<p>Area of a rectangle with height: {height} and width: {width} = {area}</p>")
+        return response
+    except:
+        response = HttpResponse()
+        response.status_code = 400
+        return response
+
 def rectangle_area(request, height: int, width: int):
     area = height*width
     response = HttpResponse(f"<p>Area of a rectangle with height: {height} and width: {width} = {area}</p>")
@@ -40,6 +52,7 @@ def circle_perimeter(request, radius):
     
 
 urlpatterns = [
+    path('rectangle/area/query', rectangle_area_query),
     path('rectangle/area/<int:height>/<int:width>', rectangle_area),
     path('rectangle/perimeter/<int:height>/<int:width>', rectangle_perimeter),
     path('circle/area/<int:radius>', circle_area),
