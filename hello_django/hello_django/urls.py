@@ -15,7 +15,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse
+from math import pi
+
+def rectangle_area(request, height: int, width: int):
+    area = height*width
+    response = HttpResponse(f"<p>Area of a rectangle with height: {height} and width: {width} = {area}</p>")
+    return response
+
+def rectangle_perimeter(request, height, width):
+    perimeter = (2*height) + (2*width)
+    response = HttpResponse(f"<p>Perimeter of a rectangle with height: {height} and width: {width} = {perimeter}</p>")
+    return response
+
+def circle_area(request, radius):
+    area = pi * radius * radius
+    response = HttpResponse(f"<p>Area of a circle with radius: {radius} = {area}</p>")
+    return response
+
+def circle_perimeter(request, radius):
+    perimeter = 2 * pi * radius
+    response = HttpResponse(f"<p>Perimeter of a circle with radius: {radius} = {perimeter}</p>")
+    return response
+    
 
 urlpatterns = [
+    path('rectangle/area/<int:height>/<int:width>', rectangle_area),
+    path('rectangle/perimeter/<int:height>/<int:width>', rectangle_perimeter),
+    path('circle/area/<int:radius>', circle_area),
+    path('circle/perimeter/<int:radius>', circle_perimeter),
     path('admin/', admin.site.urls),
 ]
